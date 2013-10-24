@@ -71,6 +71,7 @@ function insert_head () {
     <script type="text/javascript" src="{$plugin_url}exValidation/js/exvalidation.js"></script>
     <script type="text/javascript" src="{$plugin_url}exValidation/js/exchecker-ja.js"></script>
     <script type="text/javascript" src="{$plugin_url}cfg-utility.js"></script>
+    <script type="text/javascript" src="{$plugin_url}map/map_setting.js"></script>
     <script type="text/javascript">
     jQuery(function($){
         $("form#post").exValidation();
@@ -199,7 +200,7 @@ function insert_gui ($obj) {
 
         $data_type = $param['type'];
 
-        if ($data_type == 'textfield' or $data_type == 'imagefield' or $data_type == 'filefield') {
+        if ($data_type == 'textfield' or $data_type == 'imagefield' or $data_type == 'filefield' or $data_type == 'mapfield') {
             $out .= make_textform($param);
         } elseif ($data_type == 'checkbox') {
             $out .= make_checkbox($param);
@@ -305,6 +306,16 @@ EOF;
             <img class="cancel" src="" width="16" height="16" style="display:none;" />
         </p>
         <p class="cfg_add_media_pointer">{$media_buttons}</P>
+EOF;
+        $out = make_element ($name, $type, $class, $inside, $sample, $fieldname, $must);
+    } elseif ($type == 'mapfield') {
+		$plugin_url = get_bloginfo('wpurl') . '/wp-content/plugins/custom-field-gui-utility/';
+        $inside = <<< EOF
+        <p class="cfg_input">
+            $input
+            <a href="javascript:void(0)" onclick="map_setting('{$plugin_url}map/map_setting.html?{$name}');">マップを設定</a>
+            </p><p id="maparea">
+        </p>
 EOF;
         $out = make_element ($name, $type, $class, $inside, $sample, $fieldname, $must);
     }
